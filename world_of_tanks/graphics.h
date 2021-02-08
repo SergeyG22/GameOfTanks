@@ -32,7 +32,7 @@ class Tanks {                                                                   
 public:
 	virtual ~Tanks() { };
 	virtual sf::Sprite& get_sprite() = 0;
-	virtual void move(sf::Int64 time) = 0;
+	virtual void move_automatically(sf::Int64 time) = 0;
 	virtual void move_with_keyboard(sf::Event event, sf::Int64 time) = 0;
 	virtual void shot() = 0;
 	virtual std::list<std::unique_ptr<Weapon>>& get_weapon() =0;
@@ -49,7 +49,7 @@ class Tanks_v1: public Tanks {
 	double current_angle = 0;	
 	double speed_rotate = 0.05;
 	double speed_movement = 0.1;
-	double radius_of_shot = 150;
+	double radius_of_shot = 1000;
 	double distance_to_point = 0;	
 	double current_position_x = 500;
 	double current_position_y = 500;
@@ -60,7 +60,7 @@ public:
 	Tanks_v1();	
 	sf::Sprite& get_sprite()override { return sprite; }
 	std::list<std::unique_ptr<Weapon>>&get_weapon()override { return weapon; };	
-	void move(sf::Int64 time)override;
+	void move_automatically(sf::Int64 time)override;
 	void move_with_keyboard(sf::Event event, sf::Int64 time)override;
 	void rotation(sf::Int64 time);
 	void shot()override;
@@ -86,7 +86,7 @@ class Tanks_v2 : public Tanks {
 public:
 	Tanks_v2();
 	sf::Sprite& get_sprite()override { return sprite; }
-	void move(sf::Int64 time)override;
+	void move_automatically(sf::Int64 time)override;
 	void move_with_keyboard(sf::Event event, sf::Int64 time)override {};
 	void rotation(sf::Int64 time);
 	double get_angle();

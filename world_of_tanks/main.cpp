@@ -13,7 +13,6 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
-
    std::list<std::unique_ptr<Tanks>>techniks;
    TechnicFactory* tanks_factory = new TanksFactory;
    techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1()));
@@ -48,17 +47,14 @@ int main()
         window.clear();
         for (const auto& it : techniks) {          
             window.draw(it->get_sprite());
-              it->move(time);
+              it->move_automatically(time);
             for (const auto& iter : it->get_weapon()) {
                 window.draw(iter->get_sprite());
                   iter->bullet_movements(time);
-                  if (iter->get_current_position() == iter->get_coordinates_bullet()) {
-                      std::cout << it->get_weapon().size()<<'\n';
-                  }
             }
         }
         
-        for (auto it = techniks.begin(); it != techniks.end();++it) {
+        for (auto it = techniks.begin(); it != techniks.end();++it) {                 //deletes objects when a point is reached
             for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {
                 if ((*iter)->get_current_position() == (*iter)->get_coordinates_bullet()) {
                         iter = (*it)->get_weapon().erase(iter);
@@ -68,6 +64,29 @@ int main()
                 }
             }
         }
+        
+        for (auto it = techniks.begin(); it != techniks.end(); ++it) {                 // deletes an object off-screen
+            for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {            
+                if ((*iter)->get_sprite().getPosition().x <=0 || (*iter)->get_sprite().getPosition().x >= window.getSize().x
+                   || (*iter)->get_sprite().getPosition().y <= 0 || (*iter)->get_sprite().getPosition().y >= window.getSize().y
+                    
+                    ) {
+                    std::cout << (*it)->get_weapon().size() << '\n';
+                    iter = (*it)->get_weapon().erase(iter);
+                }
+                else {
+                    ++iter;
+                }
+                
+            }
+        }
+        
+
+
+
+
+
+
 
         window.display();       
     }

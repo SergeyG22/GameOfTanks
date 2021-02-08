@@ -36,7 +36,7 @@ Tanks_v1::Tanks_v1() {
 }
 
 
-void Tanks_v1::move(sf::Int64 time) {
+void Tanks_v1::move_automatically(sf::Int64 time) {
 
 	if (moving_forward) {
 		distance_to_point = sqrt((generate_position_x - current_position_x) * (generate_position_x - current_position_x) + (generate_position_y - current_position_y) * (generate_position_y - current_position_y));
@@ -124,7 +124,7 @@ Tanks_v2::Tanks_v2() {
 	angle = get_angle();
 }
 
-void Tanks_v2::move(sf::Int64 time) {
+void Tanks_v2::move_automatically(sf::Int64 time) {
 
 	if (moving_forward) {
 		distance_to_point = sqrt((generate_position_x - current_position_x) * (generate_position_x - current_position_x) + (generate_position_y - current_position_y) * (generate_position_y - current_position_y));
