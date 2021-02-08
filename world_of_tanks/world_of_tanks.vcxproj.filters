@@ -21,9 +21,15 @@
     <ClCompile Include="graphics.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="weapon.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

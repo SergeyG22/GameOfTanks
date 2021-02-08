@@ -17,7 +17,7 @@ int main()
    std::list<std::unique_ptr<Tanks>>techniks;
    TechnicFactory* tanks_factory = new TanksFactory;
    techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1()));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2()));
+ //  techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2()));
 
 
     sf::Clock clock;
@@ -34,6 +34,9 @@ int main()
         {
 
 
+            for (const auto& it : techniks) {
+                it->move_with_keyboard(event, time);
+            }
 
 
 
@@ -45,9 +48,26 @@ int main()
         window.clear();
         for (const auto& it : techniks) {          
             window.draw(it->get_sprite());
-            it->move(time);
+              it->move(time);
+            for (const auto& iter : it->get_weapon()) {
+                window.draw(iter->get_sprite());
+                  iter->bullet_movements(time);
+                  if (iter->get_current_position() == iter->get_coordinates_bullet()) {
+                      std::cout << it->get_weapon().size()<<'\n';
+                  }
+            }
         }
-
+        
+        for (auto it = techniks.begin(); it != techniks.end();++it) {
+            for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {
+                if ((*iter)->get_current_position() == (*iter)->get_coordinates_bullet()) {
+                        iter = (*it)->get_weapon().erase(iter);
+                    }
+                else {
+                    ++iter;
+                }
+            }
+        }
 
         window.display();       
     }
