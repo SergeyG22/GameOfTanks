@@ -8,25 +8,13 @@ double RandomSelection::generate_number(int min, int max) {
 	return range(mt);
 }
 
-void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous) {
-	if (asynchronous) {
-		std::thread([=]() {
-			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
-			callback();
-			}).detach();
-	}
-	else {
-		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
-		callback();
-	}
-}
-
 
 
 Tanks_v1::Tanks_v1() {
 	if (!texture.loadFromFile("teñhniñ/tank_v1.png")) {
 		std::cout << "error\n";
 	}
+	timer.set_interval_shot(0.5);           //sets the time between shots
 	sprite.setTexture(texture);
 	sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2  );
 	generate_position_x = random_selection.generate_number(150, 1130);

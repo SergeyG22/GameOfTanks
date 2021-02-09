@@ -20,13 +20,22 @@ int main()
 
 
     sf::Clock clock;
-   
+    sf::Clock clock1;
+
     while (window.isOpen())
     {
 
         auto time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time = time / 800;
+
+       auto time1 = clock1.getElapsedTime().asSeconds();
+    //   std::cout << time1 << '\n';
+
+       if (time1 > 3) {
+           clock1.restart();
+       }
+
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -45,7 +54,12 @@ int main()
 
                 
         window.clear();
-        for (const auto& it : techniks) {          
+        for (const auto& it : techniks) { 
+            if (it->get_timer().restart_clock()) {            //fire a shot if returned true
+                it->shot();
+            }
+
+
             window.draw(it->get_sprite());
               it->move_automatically(time);
             for (const auto& iter : it->get_weapon()) {
@@ -68,10 +82,9 @@ int main()
         for (auto it = techniks.begin(); it != techniks.end(); ++it) {                 // deletes an object off-screen
             for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {            
                 if ((*iter)->get_sprite().getPosition().x <=0 || (*iter)->get_sprite().getPosition().x >= window.getSize().x
-                   || (*iter)->get_sprite().getPosition().y <= 0 || (*iter)->get_sprite().getPosition().y >= window.getSize().y
-                    
+                   || (*iter)->get_sprite().getPosition().y <= 0 || (*iter)->get_sprite().getPosition().y >= window.getSize().y                    
                     ) {
-                    std::cout << (*it)->get_weapon().size() << '\n';
+                 //   std::cout << (*it)->get_weapon().size() << '\n';
                     iter = (*it)->get_weapon().erase(iter);
                 }
                 else {
