@@ -9,6 +9,7 @@
 #include <list>
 #include <cmath>
 #include "weapon.h"
+#include "healthbar.h"
 
 
 
@@ -29,7 +30,7 @@ class Timer {
 public:
 	Timer(): clock(new sf::Clock) { 
 	};
-	sf::Int64 get_elapsed_time() { return clock->getElapsedTime().asSeconds(); };
+	float get_elapsed_time() { return clock->getElapsedTime().asSeconds(); };
 	bool restart_clock() {
 		time = clock->getElapsedTime().asSeconds();
 		if (time > interval) {
@@ -52,7 +53,6 @@ public:
 	virtual sf::Sprite& get_sprite() = 0;
 	virtual void shot() = 0;
 	virtual void move_automatically(sf::Int64 time) = 0;
-	virtual void move_with_keyboard(sf::Event event, sf::Int64 time) = 0;
 	virtual Timer get_timer() = 0;
 	virtual std::list<std::unique_ptr<Weapon>>& get_weapon() =0;
 };
@@ -74,14 +74,14 @@ class Tanks_v1 : public Tanks {
 	double current_position_y = 500;
 	double generate_position_x = 0;
 	double generate_position_y = 0;	
-	std::list<std::unique_ptr<Weapon>>weapon;
+  //std::list<std::unique_ptr<Weapon>>weapon;
+	WeaponInitializer* weapon = nullptr;
 public:
-	Tanks_v1();	
+	Tanks_v1(WeaponInitializer* weapon);
 	sf::Sprite& get_sprite()override { return sprite; }
-	std::list<std::unique_ptr<Weapon>>&get_weapon()override { return weapon; };
+	std::list<std::unique_ptr<Weapon>>&get_weapon()override { return weapon->get_weapon(); };
 	Timer get_timer()override { return timer; };
 	void move_automatically(sf::Int64 time)override;
-	void move_with_keyboard(sf::Event event, sf::Int64 time)override;
 	void rotation(sf::Int64 time);
 	void shot()override;
 	double get_angle();
@@ -103,17 +103,17 @@ class Tanks_v2 : public Tanks {
 	double current_position_y = 0;
 	double generate_position_x = 0;
 	double generate_position_y = 0;
-	std::list<std::unique_ptr<Weapon>>weapon;
+	//std::list<std::unique_ptr<Weapon>>weapon;
+	WeaponInitializer* weapon = nullptr;
 public:
-	Tanks_v2();
+	Tanks_v2(WeaponInitializer* weapon);
 	sf::Sprite& get_sprite()override { return sprite; }
 	Timer get_timer()override { return timer; };
 	void move_automatically(sf::Int64 time)override;
-	void move_with_keyboard(sf::Event event, sf::Int64 time)override {};
 	void rotation(sf::Int64 time);
 	double get_angle();
 	void shot()override {};
-	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon; };
+	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon->get_weapon(); };
 };
 
 
@@ -122,18 +122,18 @@ public:
 class TechnicFactory {
 
 public:
-	virtual std::unique_ptr<Tanks> create_tank_v1() = 0;
-	virtual std::unique_ptr<Tanks> create_tank_v2() = 0;
+	virtual std::unique_ptr<Tanks> create_tank_v1(WeaponInitializer* weapon_initializer) = 0;
+	virtual std::unique_ptr<Tanks> create_tank_v2(WeaponInitializer* weapon_initializer) = 0;
 	virtual ~TechnicFactory() { };
 };
 
 class TanksFactory: public TechnicFactory {
 
 public:
-	std::unique_ptr<Tanks>create_tank_v1() {
-		return std::unique_ptr<Tanks>(new Tanks_v1);
+	std::unique_ptr<Tanks>create_tank_v1(WeaponInitializer* weapon_initializer) {
+		return std::unique_ptr<Tanks>(new Tanks_v1(weapon_initializer)); 
 	}
-	std::unique_ptr<Tanks>create_tank_v2() {
-		return std::unique_ptr<Tanks>(new Tanks_v2);
+	std::unique_ptr<Tanks>create_tank_v2(WeaponInitializer* weapon_initializer) {
+		return std::unique_ptr<Tanks>(new Tanks_v2(weapon_initializer));
 	}
 };

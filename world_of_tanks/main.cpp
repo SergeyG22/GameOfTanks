@@ -12,15 +12,18 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
+   sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
    std::list<std::unique_ptr<Tanks>>techniks;
    TechnicFactory* tanks_factory = new TanksFactory;
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1()));
- //  techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2()));
+   WeaponInitializer* weapon_initializer = new GunTypeB_Initializer;
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_initializer)));
+   
+
+
+ //techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2()));
 
 
     sf::Clock clock;
-    sf::Clock clock1;
 
     while (window.isOpen())
     {
@@ -29,12 +32,6 @@ int main()
         clock.restart();
         time = time / 800;
 
-       auto time1 = clock1.getElapsedTime().asSeconds();
-    //   std::cout << time1 << '\n';
-
-       if (time1 > 3) {
-           clock1.restart();
-       }
 
 
         sf::Event event;
@@ -42,9 +39,8 @@ int main()
         {
 
 
-            for (const auto& it : techniks) {
-                it->move_with_keyboard(event, time);
-            }
+            
+
 
 
 
@@ -84,7 +80,6 @@ int main()
                 if ((*iter)->get_sprite().getPosition().x <=0 || (*iter)->get_sprite().getPosition().x >= window.getSize().x
                    || (*iter)->get_sprite().getPosition().y <= 0 || (*iter)->get_sprite().getPosition().y >= window.getSize().y                    
                     ) {
-                 //   std::cout << (*it)->get_weapon().size() << '\n';
                     iter = (*it)->get_weapon().erase(iter);
                 }
                 else {

@@ -10,7 +10,7 @@ double RandomSelection::generate_number(int min, int max) {
 
 
 
-Tanks_v1::Tanks_v1() {
+Tanks_v1::Tanks_v1(WeaponInitializer* weapon_initializer):weapon(weapon_initializer) {
 	if (!texture.loadFromFile("teñhniñ/tank_v1.png")) {
 		std::cout << "error\n";
 	}
@@ -47,16 +47,6 @@ void Tanks_v1::move_automatically(sf::Int64 time) {
 	}	
 }
 
-void Tanks_v1::move_with_keyboard(sf::Event event, sf::Int64 time) {
-
-	if (event.type == sf::Event::KeyPressed) {
-		if (event.key.code == sf::Keyboard::Space) {
-			shot();
-		}
-	}
-
-}
-
 
 
 
@@ -87,7 +77,7 @@ void Tanks_v1::shot() {
 	double y = (radius_of_shot / 2 * multiplier_dictance) * -sin(sprite.getRotation() * PI / 180);
 	final_coordinates_bullet.x = x + current_position_x;
 	final_coordinates_bullet.y = y + current_position_y;
-	weapon.emplace_back(std::unique_ptr<Weapon>(new GunTypeA(final_coordinates_bullet, current_position_techniks)));
+	weapon->add_weapon(final_coordinates_bullet,current_position_techniks);
 }
 
 
@@ -100,7 +90,7 @@ double Tanks_v1::get_angle() {
 
 
 
-Tanks_v2::Tanks_v2() {
+Tanks_v2::Tanks_v2(WeaponInitializer* weapon_initializer):weapon(weapon_initializer) {
 	if (!texture.loadFromFile("teñhniñ/tank_v2.png")) {
 		std::cout << "error\n";
 	}
