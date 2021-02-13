@@ -10,7 +10,7 @@ double RandomSelection::generate_number(int min, int max) {
 
 
 
-Tanks_v1::Tanks_v1(WeaponInitializer* weapon_initializer):weapon(weapon_initializer) {
+Tanks_v1::Tanks_v1(WeaponInitializer* weapon_initializer, HealthBar* healthbar_initializer):weapon(weapon_initializer),healthbar(healthbar_initializer) {
 	if (!texture.loadFromFile("teñhniñ/tank_v1.png")) {
 		std::cout << "error\n";
 	}
@@ -32,6 +32,7 @@ void Tanks_v1::move_automatically(sf::Int64 time) {
 			sprite.setPosition(current_position_x, current_position_y);
 			current_position_x += speed_movement * time * (generate_position_x - current_position_x) / distance_to_point;
 			current_position_y += speed_movement * time * (generate_position_y - current_position_y) / distance_to_point;
+			healthbar->set_position(current_position_x,current_position_y);
 		}
 		else {
 			generate_position_x = random_selection.generate_number(150, 1130);
@@ -88,12 +89,20 @@ double Tanks_v1::get_angle() {
 	return angle;
 }
 
+void Tanks_v1::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite, states);
+	for (const auto& it : healthbar->get_healthbar_rectangle()) {
+		target.draw(*it, states);
+	}
+}
 
 
-Tanks_v2::Tanks_v2(WeaponInitializer* weapon_initializer):weapon(weapon_initializer) {
+
+Tanks_v2::Tanks_v2(WeaponInitializer* weapon_initializer,HealthBar* healthbar_initializer):weapon(weapon_initializer),healthbar(healthbar_initializer) {
 	if (!texture.loadFromFile("teñhniñ/tank_v2.png")) {
 		std::cout << "error\n";
 	}
+	timer.set_interval_shot(0.2);           //sets the time between shots
 	sprite.setTexture(texture);
 	sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
 	generate_position_x = random_selection.generate_number(150, 1130);
@@ -109,7 +118,8 @@ void Tanks_v2::move_automatically(sf::Int64 time) {
 		if (distance_to_point > 1) {
 			sprite.setPosition(current_position_x, current_position_y);
 			current_position_x += speed_movement * time * (generate_position_x - current_position_x) / distance_to_point;
-			current_position_y += speed_movement * time * (generate_position_y - current_position_y) / distance_to_point;			
+			current_position_y += speed_movement * time * (generate_position_y - current_position_y) / distance_to_point;
+			healthbar->set_position(current_position_x, current_position_y);
 		}
 		else {
 			generate_position_x = random_selection.generate_number(150, 1130);
@@ -125,6 +135,19 @@ void Tanks_v2::move_automatically(sf::Int64 time) {
 	}
 
 }
+
+void Tanks_v2::shot() {
+	sf::Vector2f final_coordinates_bullet;
+	sf::Vector2f current_position_techniks;
+	current_position_techniks.x = current_position_x;
+	current_position_techniks.y = current_position_y;
+	double x = (radius_of_shot / 2 * multiplier_dictance) * -cos(sprite.getRotation() * PI / 180);
+	double y = (radius_of_shot / 2 * multiplier_dictance) * -sin(sprite.getRotation() * PI / 180);
+	final_coordinates_bullet.x = x + current_position_x;
+	final_coordinates_bullet.y = y + current_position_y;
+	weapon->add_weapon(final_coordinates_bullet, current_position_techniks);
+}
+
 
 void Tanks_v2::rotation(sf::Int64 time) {
 	if (angle < current_angle) {
@@ -150,3 +173,9 @@ double Tanks_v2::get_angle() {
 	return angle;
 }
 
+void Tanks_v2::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite, states);
+	for (const auto& it : healthbar->get_healthbar_rectangle()) {
+		target.draw(*it, states);
+	}
+}

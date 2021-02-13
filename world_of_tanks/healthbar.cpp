@@ -1,6 +1,10 @@
 #include "healthbar.h"
 
 HealthBarTypeA::HealthBarTypeA() {
-	green_rectangle.setSize(sf::Vector2f(175,25));
-	red_rectangle.setSize(sf::Vector2f(175,25));
+	healthbar_rectangle.emplace_back(new sf::RectangleShape);
+	healthbar_rectangle.emplace_back(new sf::RectangleShape);
+	healthbar_rectangle[0]->setSize(sf::Vector2f(160, 15));
+	healthbar_rectangle[1]->setSize(sf::Vector2f(160, 15));
+	healthbar_rectangle[0]->setFillColor(sf::Color::Red);	
+	healthbar_rectangle[1]->setFillColor(sf::Color::Green);
 }

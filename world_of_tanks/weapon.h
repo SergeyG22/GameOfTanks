@@ -48,11 +48,6 @@ public:
 
 
 
-
-
-
-
-
 class WeaponInitializer {                                           //strategy
 	
 public:

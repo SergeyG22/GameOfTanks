@@ -15,12 +15,13 @@ int main()
    sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
    std::list<std::unique_ptr<Tanks>>techniks;
    TechnicFactory* tanks_factory = new TanksFactory;
-   WeaponInitializer* weapon_initializer = new GunTypeB_Initializer;
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_initializer)));
-   
+   WeaponInitializer* weapon_b = new GunTypeB_Initializer;
+   HealthBar* healthbar_a = new HealthBarTypeA;
+   WeaponInitializer* weapon_a = new GunTypeA_Initializer;
+   HealthBar* healthbar_b = new HealthBarTypeA;
 
-
- //techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2()));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_b,healthbar_a)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_a,healthbar_b)));
 
 
     sf::Clock clock;
@@ -51,18 +52,19 @@ int main()
                 
         window.clear();
         for (const auto& it : techniks) { 
-            if (it->get_timer().restart_clock()) {            //fire a shot if returned true
+            if (it->get_timer().restart_clock()) {            //fire a shot if returned true                
                 it->shot();
-            }
-
-
-            window.draw(it->get_sprite());
+            }          
+              window.draw(*it);
               it->move_automatically(time);
             for (const auto& iter : it->get_weapon()) {
                 window.draw(iter->get_sprite());
                   iter->bullet_movements(time);
             }
         }
+
+
+
         
         for (auto it = techniks.begin(); it != techniks.end();++it) {                 //deletes objects when a point is reached
             for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {
@@ -80,7 +82,7 @@ int main()
                 if ((*iter)->get_sprite().getPosition().x <=0 || (*iter)->get_sprite().getPosition().x >= window.getSize().x
                    || (*iter)->get_sprite().getPosition().y <= 0 || (*iter)->get_sprite().getPosition().y >= window.getSize().y                    
                     ) {
-                    iter = (*it)->get_weapon().erase(iter);
+                    iter = (*it)->get_weapon().erase(iter);                   
                 }
                 else {
                     ++iter;
@@ -89,12 +91,6 @@ int main()
             }
         }
         
-
-
-
-
-
-
 
         window.display();       
     }
