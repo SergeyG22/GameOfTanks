@@ -77,13 +77,13 @@ int main()
         for (auto it1 = techniks.begin(); it1 != techniks.end(); ++it1) {
             for (auto it2 = techniks.begin(); it2 != techniks.end(); ++it2) {
                 if ((*it1)->intersection((*it2)->get_sprite())) {
-                    for (auto iter = (*it1)->get_weapon().begin(); iter != (*it1)->get_weapon().end();) {
+                    for (auto it3 = (*it1)->get_weapon().begin(); it3 != (*it1)->get_weapon().end();) {
                         if ((*it1)->intersection((*it2)->get_sprite())) {
-                            (*it2)->get_damage((*iter)->get_power_of_weapon());
-                            iter = (*it1)->get_weapon().erase(iter);
+                            (*it2)->get_damage((*it3)->get_power_of_weapon());
+                            it3 = (*it1)->get_weapon().erase(it3);
                         }
                         else {
-                            ++iter;
+                            ++it3;
                         }
                     }
                        
@@ -92,26 +92,18 @@ int main()
             }
         }
         
-        for (auto it1 = techniks.begin(); it1 != techniks.end(); ) {
-            if ((*it1)->destroy_object()) {
-                it1 = techniks.erase(it1);
+        for (auto it = techniks.begin(); it != techniks.end(); ) {
+            if ((*it)->destroy_object()) {
+                it = techniks.erase(it);
             } 
             else{
-                ++it1;
+                ++it;
             }
         }
         
         
 
-        
-
-
-
-
-
-
-
-
+   
 
         
         for (auto it = techniks.begin(); it != techniks.end(); ++it) {                 //deletes objects when a point is reached

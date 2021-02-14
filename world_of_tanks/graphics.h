@@ -23,25 +23,14 @@ public:
 
 
 
-class Timer {
-	sf::Clock* clock = nullptr;
-	float interval = 0;
+class Timer {	
 	float time = 0;
+	float interval = 0;
+	sf::Clock* clock = nullptr;
 public:
-	Timer(): clock(new sf::Clock) { 
-	};
-	float get_elapsed_time() { return clock->getElapsedTime().asSeconds(); };
-	bool restart_clock() {
-		time = clock->getElapsedTime().asSeconds();
-		if (time > interval) {
-			clock->restart();
-			return true;
-		}
-		return false;
-	};
-	void set_interval_shot(float interval_) {
-		interval = interval_;
-	}
+	Timer(): clock(new sf::Clock) {  };
+	bool restart_clock();
+	inline void set_interval_shot(float interval_) { interval = interval_;}
 };
 
 
@@ -49,7 +38,6 @@ public:
 class Tanks: public sf::Drawable {                                                                         //abstract factory
 
 public:
-	virtual ~Tanks() { };
 	virtual void shot() = 0;
 	virtual void move_automatically(sf::Int64 time) = 0;
 	virtual void get_damage(float get_damage) = 0;
@@ -57,7 +45,8 @@ public:
 	virtual bool intersection(sf::Sprite& sprite) = 0;
 	virtual Timer get_timer() = 0;
 	virtual std::list<std::unique_ptr<Weapon>>& get_weapon() = 0;
-	virtual sf::Sprite& get_sprite () = 0;
+	virtual sf::Sprite& get_sprite() = 0;
+	virtual ~Tanks() { };
 };
 
 class Tanks_v1: public Tanks {
@@ -67,6 +56,8 @@ class Tanks_v1: public Tanks {
 	RandomSelection random_selection;
 	WeaponInitializer* weapon = nullptr;
 	HealthBar* healthbar = nullptr;
+	inline sf::Sprite& get_sprite() {  return sprite;  };
+	inline Timer get_timer()override { return timer; };
 	int multiplier_dictance = 5;
 	bool moving_forward = true;
 	double angle = 0.0;
@@ -78,39 +69,18 @@ class Tanks_v1: public Tanks {
 	double current_position_x = 500;
 	double current_position_y = 500;
 	double generate_position_x = 0;
-	double generate_position_y = 0;	
+	double generate_position_y = 0;
+	double get_angle();
+	void rotation(sf::Int64 time);
+	void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
 public:
 	Tanks_v1(WeaponInitializer* weapon, HealthBar* healthbar);	
-	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon->get_weapon();  };
-	Timer get_timer()override { return timer; };
-	sf::Sprite& get_sprite() { return sprite; };
-	void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
-	void move_automatically(sf::Int64 time)override;
-	void rotation(sf::Int64 time);
-	void shot()override;
-	void get_damage(float power_damage)override {
-		healthbar->change_healthbar(power_damage);
-	}
-	bool destroy_object()override {
-		if (healthbar->get_healthbar_rectangle()[1]->getSize().x == 0) {
-			return true;
-		} 
-		else {
-			return false;
-		}
-	}
-
-	bool intersection(sf::Sprite& spr)override {
-		for (const auto& it : get_weapon()) {
-			if (!sprite.getGlobalBounds().intersects(it->get_sprite().getGlobalBounds()) && it->get_sprite().getGlobalBounds().intersects(spr.getGlobalBounds())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-	double get_angle();
+	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon->get_weapon();  };	
+	void shot()                            override;
+	void get_damage(float power_damage)    override;
+	void move_automatically(sf::Int64 time)override;			
+	bool destroy_object()                  override;
+	bool intersection(sf::Sprite& spr)     override;	
 };
 
 
@@ -121,6 +91,8 @@ class Tanks_v2 : public Tanks {
 	RandomSelection random_selection; 
 	WeaponInitializer* weapon = nullptr;
 	HealthBar* healthbar = nullptr;
+	inline sf::Sprite& get_sprite() {  return sprite; };
+	inline Timer get_timer() override { return timer; };
 	int multiplier_dictance = 5;
 	bool moving_forward = true;
 	double angle = 0.0;
@@ -133,35 +105,17 @@ class Tanks_v2 : public Tanks {
 	double current_position_y = 0;
 	double generate_position_x = 0;
 	double generate_position_y = 0;
+	double get_angle();
+	void rotation(sf::Int64 time);
+	void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
 public:
 	Tanks_v2(WeaponInitializer* weapon,HealthBar* healthbar);	
-	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon->get_weapon(); };
-	Timer get_timer()override { return timer; };
-	sf::Sprite& get_sprite() { return sprite; };
-	void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
-	void move_automatically(sf::Int64 time)override;
-	void rotation(sf::Int64 time);
-	void shot()override;
-	void get_damage(float power_damage)override {
-		healthbar->change_healthbar(power_damage);
-	}
-	bool destroy_object()override {
-		if (healthbar->get_healthbar_rectangle()[1]->getSize().x == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	bool intersection(sf::Sprite& spr)override { 
-		for (const auto& it : get_weapon()) {
-			if (!sprite.getGlobalBounds().intersects(it->get_sprite().getGlobalBounds()) && it->get_sprite().getGlobalBounds().intersects(spr.getGlobalBounds())) {
-				return true;
-			}
-		}
-		return false;	
-	};
-	double get_angle();	
+	std::list<std::unique_ptr<Weapon>>& get_weapon()override { return weapon->get_weapon(); };	
+	void shot()                            override;
+	void get_damage(float power_damage)    override;
+	void move_automatically(sf::Int64 time)override;		
+	bool destroy_object()                  override;
+	bool intersection(sf::Sprite& spr)     override;	
 };
 
 

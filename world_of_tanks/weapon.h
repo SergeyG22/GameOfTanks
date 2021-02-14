@@ -22,13 +22,13 @@ class GunTypeA: public Weapon{
 	double distance_to_point = 0;	
 	sf::Vector2f current_position;
 	sf::Vector2f final_coordinates_bullet;
-public:
-	GunTypeA(sf::Vector2f final_coordinates_bullet,sf::Vector2f current_position);
 	sf::Sprite& get_sprite()override { return sprite; }
 	void bullet_movements(sf::Int64 time)override;
-	sf::Vector2i get_current_position()override { return (sf::Vector2i)current_position; };
+	float get_power_of_weapon()          override { return power_damage; };
+	sf::Vector2i get_current_position()  override { return (sf::Vector2i)current_position; };
 	sf::Vector2i get_coordinates_bullet()override { return (sf::Vector2i)final_coordinates_bullet; };
-	float get_power_of_weapon()override { return power_damage; };
+public:
+	GunTypeA(sf::Vector2f final_coordinates_bullet,sf::Vector2f current_position);			
 };
 
 class GunTypeB : public Weapon {
@@ -39,17 +39,14 @@ class GunTypeB : public Weapon {
 	double distance_to_point = 0;
 	sf::Vector2f current_position;
 	sf::Vector2f final_coordinates_bullet;
-public:
-	GunTypeB(sf::Vector2f final_coordinates_bullet, sf::Vector2f current_position);
 	sf::Sprite& get_sprite()override { return sprite; }
 	void bullet_movements(sf::Int64 time)override;
-	sf::Vector2i get_current_position()override { return (sf::Vector2i)current_position; };
+	float get_power_of_weapon()          override { return power_damage; };
+	sf::Vector2i get_current_position()  override { return (sf::Vector2i)current_position; };
 	sf::Vector2i get_coordinates_bullet()override { return (sf::Vector2i)final_coordinates_bullet; };
-	float get_power_of_weapon()override { return power_damage; };
+public:
+	GunTypeB(sf::Vector2f final_coordinates_bullet, sf::Vector2f current_position);		
 };
-
-
-
 
 
 

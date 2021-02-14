@@ -8,6 +8,18 @@ double RandomSelection::generate_number(int min, int max) {
 	return range(mt);
 }
 
+bool Timer::restart_clock() {
+	time = clock->getElapsedTime().asSeconds();
+	if (time > interval) {
+		clock->restart();
+		return true;
+	}
+	return false;
+};
+
+
+
+
 
 
 Tanks_v1::Tanks_v1(WeaponInitializer* weapon_initializer, HealthBar* healthbar_initializer):weapon(weapon_initializer),healthbar(healthbar_initializer) {
@@ -81,6 +93,26 @@ void Tanks_v1::shot() {
 	weapon->add_weapon(final_coordinates_bullet,current_position_techniks);
 }
 
+void Tanks_v1::get_damage(float power_damage){
+	healthbar->change_healthbar(power_damage);
+}
+
+bool Tanks_v1::destroy_object(){
+	if (healthbar->get_healthbar_rectangle()[1]->getSize().x == 0) {
+		return true;
+	}
+		return false;	
+}
+
+bool Tanks_v1::intersection(sf::Sprite& spr){
+	for (const auto& it : get_weapon()) {
+		if (!sprite.getGlobalBounds().intersects(it->get_sprite().getGlobalBounds()) && it->get_sprite().getGlobalBounds().intersects(spr.getGlobalBounds())) {
+			return true;
+		}
+	}
+	return false;
+}
+
 
 double Tanks_v1::get_angle() {
 	double delta_x = current_position_x - generate_position_x;
@@ -136,6 +168,11 @@ void Tanks_v2::move_automatically(sf::Int64 time) {
 
 }
 
+void Tanks_v2::get_damage(float power_damage) {
+	healthbar->change_healthbar(power_damage);
+}
+
+
 void Tanks_v2::shot() {
 	sf::Vector2f final_coordinates_bullet;
 	sf::Vector2f current_position_techniks;
@@ -147,6 +184,22 @@ void Tanks_v2::shot() {
 	final_coordinates_bullet.y = y + current_position_y;
 	weapon->add_weapon(final_coordinates_bullet, current_position_techniks);
 }
+
+bool Tanks_v2::destroy_object() {
+	if (healthbar->get_healthbar_rectangle()[1]->getSize().x == 0) {
+		return true;
+	}
+	    return false;
+}
+
+bool Tanks_v2::intersection(sf::Sprite& spr) {
+	for (const auto& it : get_weapon()) {
+		if (!sprite.getGlobalBounds().intersects(it->get_sprite().getGlobalBounds()) && it->get_sprite().getGlobalBounds().intersects(spr.getGlobalBounds())) {
+			return true;
+		}
+	}
+	return false;
+};
 
 
 void Tanks_v2::rotation(sf::Int64 time) {
@@ -165,6 +218,9 @@ void Tanks_v2::rotation(sf::Int64 time) {
 		}
 	}
 }
+
+
+
 
 double Tanks_v2::get_angle() {
 	double delta_x = current_position_x - generate_position_x;

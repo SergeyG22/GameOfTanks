@@ -2,7 +2,6 @@
 
 
 GunTypeA::GunTypeA(sf::Vector2f final_coordinates_bullet_, sf::Vector2f current_position_techniks){
-
 	final_coordinates_bullet = final_coordinates_bullet_;
 	current_position = current_position_techniks;
 	current_position.x -= texture.getSize().x/2;
@@ -26,7 +25,6 @@ void GunTypeA::bullet_movements(sf::Int64 time) {
 
 
 GunTypeB::GunTypeB(sf::Vector2f final_coordinates_bullet_, sf::Vector2f current_position_techniks) {
-
 	final_coordinates_bullet = final_coordinates_bullet_;
 	current_position = current_position_techniks;
 	current_position.x -= texture.getSize().x / 2;
