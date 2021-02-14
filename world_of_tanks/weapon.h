@@ -11,13 +11,15 @@ public:
 	virtual void bullet_movements(sf::Int64 time) = 0;
 	virtual sf::Vector2i get_current_position() = 0;
 	virtual sf::Vector2i get_coordinates_bullet() = 0;
+	virtual float get_power_of_weapon() = 0;
 };
 
 class GunTypeA: public Weapon{
 	sf::Sprite sprite;
 	sf::Texture texture;
+	float power_damage = 50;
 	double speed_movement = 1.5;
-	double distance_to_point = 0;
+	double distance_to_point = 0;	
 	sf::Vector2f current_position;
 	sf::Vector2f final_coordinates_bullet;
 public:
@@ -26,12 +28,14 @@ public:
 	void bullet_movements(sf::Int64 time)override;
 	sf::Vector2i get_current_position()override { return (sf::Vector2i)current_position; };
 	sf::Vector2i get_coordinates_bullet()override { return (sf::Vector2i)final_coordinates_bullet; };
+	float get_power_of_weapon()override { return power_damage; };
 };
 
 class GunTypeB : public Weapon {
 	sf::Sprite sprite;
 	sf::Texture texture;
-	double speed_movement = 0.5;
+	float power_damage = 5;
+	double speed_movement = 1.5;
 	double distance_to_point = 0;
 	sf::Vector2f current_position;
 	sf::Vector2f final_coordinates_bullet;
@@ -41,6 +45,7 @@ public:
 	void bullet_movements(sf::Int64 time)override;
 	sf::Vector2i get_current_position()override { return (sf::Vector2i)current_position; };
 	sf::Vector2i get_coordinates_bullet()override { return (sf::Vector2i)final_coordinates_bullet; };
+	float get_power_of_weapon()override { return power_damage; };
 };
 
 

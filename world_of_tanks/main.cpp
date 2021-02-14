@@ -20,11 +20,20 @@ int main()
    WeaponInitializer* weapon_a = new GunTypeA_Initializer;
    HealthBar* healthbar_b = new HealthBarTypeA;
 
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_b,healthbar_a)));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_a,healthbar_b)));
+   WeaponInitializer* weapon_c = new GunTypeB_Initializer;
+   HealthBar* healthbar_c = new HealthBarTypeA;
+
+
+   
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_a,healthbar_a)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_b,healthbar_b)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_c, healthbar_c)));
 
 
     sf::Clock clock;
+
+  
+
 
     while (window.isOpen())
     {
@@ -51,7 +60,7 @@ int main()
 
                 
         window.clear();
-        for (const auto& it : techniks) { 
+        for (const auto& it : techniks) {            
             if (it->get_timer().restart_clock()) {            //fire a shot if returned true                
                 it->shot();
             }          
@@ -60,14 +69,53 @@ int main()
             for (const auto& iter : it->get_weapon()) {
                 window.draw(iter->get_sprite());
                   iter->bullet_movements(time);
+                  it->get_weapon();
             }
         }
 
 
+        for (auto it1 = techniks.begin(); it1 != techniks.end(); ++it1) {
+            for (auto it2 = techniks.begin(); it2 != techniks.end(); ++it2) {
+                if ((*it1)->intersection((*it2)->get_sprite())) {
+                    for (auto iter = (*it1)->get_weapon().begin(); iter != (*it1)->get_weapon().end();) {
+                        if ((*it1)->intersection((*it2)->get_sprite())) {
+                            (*it2)->get_damage((*iter)->get_power_of_weapon());
+                            iter = (*it1)->get_weapon().erase(iter);
+                        }
+                        else {
+                            ++iter;
+                        }
+                    }
+                       
+                  
+                }
+            }
+        }
+        
+        for (auto it1 = techniks.begin(); it1 != techniks.end(); ) {
+            if ((*it1)->destroy_object()) {
+                it1 = techniks.erase(it1);
+            } 
+            else{
+                ++it1;
+            }
+        }
+        
+        
 
         
-        for (auto it = techniks.begin(); it != techniks.end();++it) {                 //deletes objects when a point is reached
-            for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {
+
+
+
+
+
+
+
+
+
+        
+        for (auto it = techniks.begin(); it != techniks.end(); ++it) {                 //deletes objects when a point is reached
+            for (auto iter = (*it)->get_weapon().begin(); iter != (*it)->get_weapon().end();) {               
                 if ((*iter)->get_current_position() == (*iter)->get_coordinates_bullet()) {
                         iter = (*it)->get_weapon().erase(iter);
                     }
@@ -91,6 +139,10 @@ int main()
             }
         }
         
+
+
+
+
 
         window.display();       
     }
