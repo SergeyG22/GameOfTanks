@@ -2,7 +2,7 @@
 #include <list>
 #include <memory>
 #include "graphics.h"
-
+#include "animation.h"
 
 
 
@@ -15,24 +15,25 @@ int main()
    sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
    std::list<std::unique_ptr<Tanks>>techniks;
    TechnicFactory* tanks_factory = new TanksFactory;
-   WeaponInitializer* weapon_b = new GunTypeB_Initializer;
+   WeaponInitializer* weapon_b = new GunTypeA_Initializer;
    HealthBar* healthbar_a = new HealthBarTypeA;
    WeaponInitializer* weapon_a = new GunTypeA_Initializer;
    HealthBar* healthbar_b = new HealthBarTypeA;
-
-   WeaponInitializer* weapon_c = new GunTypeB_Initializer;
+   WeaponInitializer* weapon_c = new GunTypeA_Initializer;
    HealthBar* healthbar_c = new HealthBarTypeA;
 
-
+   std::list<std::unique_ptr<Explosion>>explosion;
    
+
+
    techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_a,healthbar_a)));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_b,healthbar_b)));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v2(weapon_c, healthbar_c)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_b,healthbar_b)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_c, healthbar_c)));
 
 
     sf::Clock clock;
 
-  
+
 
 
     while (window.isOpen())
@@ -48,7 +49,6 @@ int main()
         while (window.pollEvent(event))
         {
 
-
             
 
 
@@ -60,6 +60,15 @@ int main()
 
                 
         window.clear();
+
+        
+
+        
+
+
+
+
+
         for (const auto& it : techniks) {            
             if (it->get_timer().restart_clock()) {            //fire a shot if returned true                
                 it->shot();
@@ -79,7 +88,10 @@ int main()
                 if ((*it1)->intersection((*it2)->get_sprite())) {
                     for (auto it3 = (*it1)->get_weapon().begin(); it3 != (*it1)->get_weapon().end();) {
                         if ((*it1)->intersection((*it2)->get_sprite())) {
+
+                         
                             (*it2)->get_damage((*it3)->get_power_of_weapon());
+                            explosion.emplace_back(std::unique_ptr<Explosion>(new Explosion_A(sf::Vector2f((*it3)->get_current_position()))));                           
                             it3 = (*it1)->get_weapon().erase(it3);
                         }
                         else {
@@ -101,7 +113,20 @@ int main()
             }
         }
         
-        
+        for (auto it = explosion.begin(); it != explosion.end(); ) {
+            if (!(*it)->get_state()) {
+                it = explosion.erase(it);
+            } 
+            else {
+                ++it;
+            }
+            
+        }
+
+        for (const auto& it : explosion) {
+            it->play(time);
+            window.draw(*it);
+        }
 
    
 
@@ -130,6 +155,7 @@ int main()
                 
             }
         }
+        
         
 
 

@@ -146,12 +146,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="healthbar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="healthbar.h" />
     <ClInclude Include="weapon.h" />
