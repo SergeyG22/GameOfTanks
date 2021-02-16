@@ -14,24 +14,25 @@ int main()
 {
    sf::RenderWindow window(sf::VideoMode(1280, 1024), "World of tanks");
    std::list<std::unique_ptr<Tanks>>techniks;
+   std::list<std::unique_ptr<Explosion>>explosion;
+
    TechnicFactory* tanks_factory = new TanksFactory;
    WeaponInitializer* weapon_b = new GunTypeA_Initializer;
    HealthBar* healthbar_a = new HealthBarTypeA;
-   WeaponInitializer* weapon_a = new GunTypeA_Initializer;
+   WeaponInitializer* weapon_a = new GunTypeB_Initializer;
    HealthBar* healthbar_b = new HealthBarTypeA;
-   WeaponInitializer* weapon_c = new GunTypeA_Initializer;
+   WeaponInitializer* weapon_c = new GunTypeB_Initializer;
    HealthBar* healthbar_c = new HealthBarTypeA;
 
-   std::list<std::unique_ptr<Explosion>>explosion;
+   WeaponInitializer* weapon_d = new GunTypeB_Initializer;
+   HealthBar* healthbar_d = new HealthBarTypeA;
    
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_version_2(weapon_b,healthbar_a)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_version_2(weapon_b,healthbar_b)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_version_2(weapon_c,healthbar_c)));
+   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_version_1_for_player(weapon_d,healthbar_d)));
 
-
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_a,healthbar_a)));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_b,healthbar_b)));
-   techniks.emplace_back(std::unique_ptr<Tanks>(tanks_factory->create_tank_v1(weapon_c, healthbar_c)));
-
-
-    sf::Clock clock;
+   sf::Clock clock;
 
 
 
@@ -48,7 +49,9 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-
+            for (const auto& it : techniks) {
+                it->shot_with_keyboard(event);
+            }
             
 
 
@@ -75,6 +78,7 @@ int main()
             }          
               window.draw(*it);
               it->move_automatically(time);
+              it->keyboard_control(time);
             for (const auto& iter : it->get_weapon()) {
                 window.draw(iter->get_sprite());
                   iter->bullet_movements(time);
