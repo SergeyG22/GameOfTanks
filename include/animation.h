@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 
 class Explosion: public sf::Drawable {
 

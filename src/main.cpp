@@ -1,8 +1,7 @@
-#include <SFML/Graphics.hpp>
+#include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 #include <list>
-#include <memory>
-#include "graphics.h"
-#include "animation.h"
+#include "../include/graphics.h"
+#include "../include/animation.h"
 
 
 
@@ -63,13 +62,6 @@ int main()
 
                 
         window.clear();
-
-        
-
-        
-
-
-
 
 
         for (const auto& it : techniks) {            

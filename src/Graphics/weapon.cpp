@@ -1,4 +1,4 @@
-#include "weapon.h"
+#include "../../include/weapon.h"
 
 
 GunTypeA::GunTypeA(sf::Vector2f final_coordinates_bullet_, sf::Vector2f current_position_techniks){
@@ -6,7 +6,7 @@ GunTypeA::GunTypeA(sf::Vector2f final_coordinates_bullet_, sf::Vector2f current_
 	current_position = current_position_techniks;
 	current_position.x -= texture.getSize().x/2;
 	current_position.y -= texture.getSize().y/2;
-	if (!texture.loadFromFile("weapon/weapon_a.png")) {
+	if (!texture.loadFromFile("../resource/weapon/weapon_a.png")) {
 		std::cout << "error\n";
 	}
 	sprite.setTexture(texture);
@@ -29,7 +29,7 @@ GunTypeB::GunTypeB(sf::Vector2f final_coordinates_bullet_, sf::Vector2f current_
 	current_position = current_position_techniks;
 	current_position.x -= texture.getSize().x / 2;
 	current_position.y -= texture.getSize().y / 2;
-	if (!texture.loadFromFile("weapon/weapon_b.png")) {
+	if (!texture.loadFromFile("../resource/weapon/weapon_b.png")) {
 		std::cout << "error\n";
 	}
 	sprite.setTexture(texture);

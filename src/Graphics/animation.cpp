@@ -1,7 +1,7 @@
-#include "animation.h"
+#include "../../include/animation.h"
 
 Explosion_A::Explosion_A(sf::Vector2f position) {
-	if (!texture.loadFromFile("animation/explosion_a.png")) {
+	if (!texture.loadFromFile("../resource/animation/explosion_a.png")) {
 		std::cout << "error\n";
 	}
 	sprite.setTexture(texture);
