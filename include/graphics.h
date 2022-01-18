@@ -1,9 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <functional>
+#include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 #include <iostream>
-#include <thread>
-#include <memory>
 #include <random>
 #include <chrono>
 #include <list>
@@ -49,7 +46,7 @@ public:
 	virtual Timer get_timer() = 0;
 	virtual std::list<std::unique_ptr<Weapon>>& get_weapon() = 0;
 	virtual sf::Sprite& get_sprite() = 0;
-	virtual ~Tanks() { };
+	virtual ~Tanks() = default;
 };
 
 class TankVersion1: public Tanks {
@@ -166,7 +163,7 @@ public:
 	virtual std::unique_ptr<Tanks> create_tank_version_1(WeaponInitializer* weapon_initializer,HealthBar* healbar_initializer) = 0;
 	virtual std::unique_ptr<Tanks> create_tank_version_2(WeaponInitializer* weapon_initializer,HealthBar* healbar_initializer) = 0;
 	virtual std::unique_ptr<Tanks> create_tank_version_1_for_player(WeaponInitializer* weapon_initializer, HealthBar* healbar_initializer) = 0;
-	virtual ~TechnicFactory() { };
+	virtual ~TechnicFactory() = default;
 };
 
 class TanksFactory: public TechnicFactory {

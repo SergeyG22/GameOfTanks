@@ -1,4 +1,4 @@
-#include "healthbar.h"
+#include "../../include/healthbar.h"
 
 HealthBarTypeA::HealthBarTypeA() {
 	healthbar_rectangle.emplace_back(new sf::RectangleShape);

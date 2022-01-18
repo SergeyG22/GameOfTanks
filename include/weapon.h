@@ -1,18 +1,19 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 #include <iostream>
 #include <list>
 
 class Weapon {
 
 public:
-	virtual ~Weapon() { };
+	virtual ~Weapon() = default;
 	virtual sf::Sprite& get_sprite() = 0;
 	virtual void bullet_movements(sf::Int64 time) = 0;
 	virtual sf::Vector2i get_current_position() = 0;
 	virtual sf::Vector2i get_coordinates_bullet() = 0;
 	virtual float get_power_of_weapon() = 0;
 };
+
 
 class GunTypeA: public Weapon{
 	sf::Sprite sprite;

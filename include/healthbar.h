@@ -1,7 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+
+#include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 #include <vector>
-#include <memory>
 
 class HealthBar {
 

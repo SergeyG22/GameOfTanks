@@ -1,4 +1,5 @@
-#include "graphics.h"
+#include "../../include/graphics.h"
+
 
 
 double RandomSelection::generate_number(int min, int max) {
@@ -23,7 +24,7 @@ bool Timer::restart_clock() {
 
 
 TankVersion1::TankVersion1(WeaponInitializer* weapon_initializer, HealthBar* healthbar_initializer):weapon(weapon_initializer),healthbar(healthbar_initializer) {
-	if (!texture.loadFromFile("teñhniñ/tank_v1.png")) {
+	if (!texture.loadFromFile("../../resource/technic/tank_v1.png")) {
 		std::cout << "error\n";
 	}
 	timer.set_interval_shot(0.5);           //sets the time between shots
@@ -132,7 +133,7 @@ void TankVersion1::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 
 TankVersion1_ForThePlayer::TankVersion1_ForThePlayer(WeaponInitializer* weapon_initializer, HealthBar* healthbar_initializer) :weapon(weapon_initializer), healthbar(healthbar_initializer) {
-	if (!texture.loadFromFile("teñhniñ/tank_v1.png")) {
+	if (!texture.loadFromFile("../resource/technic/tank_v1.png")) {
 		std::cout << "error\n";
 	}
 	timer.set_interval_shot(0.5);           //sets the time between shots
@@ -252,8 +253,8 @@ void TankVersion1_ForThePlayer::draw(sf::RenderTarget& target, sf::RenderStates 
 
 
 TankVersion2::TankVersion2(WeaponInitializer* weapon_initializer,HealthBar* healthbar_initializer):weapon(weapon_initializer),healthbar(healthbar_initializer) {
-	if (!texture.loadFromFile("teñhniñ/tank_v2.png")) {
-		std::cout << "error\n";
+	if (!texture.loadFromFile("../resource/technic/tank_v2.png")) {
+		std::cout << "error123\n";
 	}
 	timer.set_interval_shot(0.2);           //sets the time between shots
 	sprite.setTexture(texture);
