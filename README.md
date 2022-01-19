@@ -23,6 +23,13 @@ cmake ..
  SPACE - make a shot
 ```
 
+### How to add resources to an executable file
+
+```
+
+Copy the resources folder at the root of the project directory and paste it one directory higher from the executable file.
+```
+
 ### Preview
 
 ![hippo](https://github.com/SergeyG22/WorldOfTanks/blob/master/resource/animation/animation.gif)
