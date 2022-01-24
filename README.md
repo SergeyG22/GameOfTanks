@@ -34,6 +34,12 @@ Copy the resources folder at the root of the project directory.
 Paste it one directory higher from the executable file.
 ```
 
+### If Linux requires a dependency type in cmd:
+
+```
+sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libdbus-1-dev libudev-dev libxi-dev libxrandr-dev yasm xvfb wget unzip libopenal-dev libvorbis-dev libflac-dev
+```
+
 ### Preview
 
 ![hippo](https://github.com/SergeyG22/WorldOfTanks/blob/master/docs/images/animation.gif)
