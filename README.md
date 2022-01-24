@@ -32,7 +32,6 @@ cmake ..
 Copy the resources folder at the root of the project directory.
 Paste it one directory higher from the executable file.
 ```
-![hippo](https://github.com/SergeyG22/WorldOfTanks/blob/master/docs/images/folder.jpg)
 
 ### Preview
 
