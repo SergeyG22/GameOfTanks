@@ -2,7 +2,7 @@
 
 The program is a simulator of tank battles. It is possible to expand and modify various weapons (in this example, only the groundwork is implemented).
 
-[![CMake](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/cmake.yml/badge.svg?event=push)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/cmake.yml)
+[![CI - Windows](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml)<br>
 
 
 ### Build from source
