@@ -4,6 +4,7 @@ The program is a simulator of tank battles. It is possible to expand and modify 
 
 [![CI - Windows](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml)<br>
 [![CI - linux](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/linux_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/linux_builds.yml)<br>
+[![CI - macOS](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/macos_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/macos_builds.yml)<br>
 
 
 ### Build from source
