@@ -2,6 +2,7 @@
 #include "../build/_deps/sfml-src/include/SFML/Graphics.hpp"
 #include <iostream>
 #include <list>
+#include <cmath>
 
 class Weapon {
 
