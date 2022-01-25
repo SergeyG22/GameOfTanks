@@ -1,5 +1,5 @@
-Copyright (c) 2021-2022 WorldOfTanks.
-Copyright (c) 2021-2022 WorldOfTanks (cf. AUTHORS.md).
+Copyright (c) 2021-2022 GameOfTanks.
+Copyright (c) 2021-2022 GameOfTanks (cf. AUTHORS.md).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
