@@ -1,4 +1,4 @@
-### WorldOfTanks
+### GameOfTanks
 
 The program is a simulator of tank battles. It is possible to expand and modify various weapons (in this example, only the groundwork is implemented).
 
@@ -10,8 +10,8 @@ The program is a simulator of tank battles. It is possible to expand and modify 
 ### Build from source
 CMake 3.13 or higher must be installed
 ```
-git clone https://github.com/SergeyG22/WorldOfTanks.git
-cd WorldOfTanks
+git clone https://github.com/SergeyG22/GameOfTanks.git
+cd GameOfTanks
 mkdir build
 cd build
 cmake ..
@@ -42,5 +42,5 @@ sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev libxin
 
 ### Preview
 
-![hippo](https://github.com/SergeyG22/WorldOfTanks/blob/master/docs/images/animation.gif)
+![hippo](https://github.com/SergeyG22/GameOfTanks/blob/master/docs/images/animation.gif)
 
