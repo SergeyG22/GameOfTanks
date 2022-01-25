@@ -2,9 +2,9 @@
 
 The program is a simulator of tank battles. It is possible to expand and modify various weapons (in this example, only the groundwork is implemented).
 
-[![CI - Windows](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/windows_builds.yml)<br>
-[![CI - linux](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/linux_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/linux_builds.yml)<br>
-[![CI - macOS](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/macos_builds.yml/badge.svg)](https://github.com/SergeyG22/WorldOfTanks/actions/workflows/macos_builds.yml)<br>
+[![CI - Windows](https://github.com/SergeyG22/GameOfTanks/actions/workflows/windows_builds.yml/badge.svg)](https://github.com/SergeyG22/GameOfTanks/actions/workflows/windows_builds.yml)<br>
+[![CI - linux](https://github.com/SergeyG22/GameOfTanks/actions/workflows/linux_builds.yml/badge.svg)](https://github.com/SergeyG22/GameOfTanks/actions/workflows/linux_builds.yml)<br>
+[![CI - macOS](https://github.com/SergeyG22/GameOfTanks/actions/workflows/macos_builds.yml/badge.svg)](https://github.com/SergeyG22/GameOfTanks/actions/workflows/macos_builds.yml)<br>
 
 
 ### Build from source
